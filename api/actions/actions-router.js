@@ -58,5 +58,12 @@ router.delete("/:id", validateActionId, async (req, res, next) => {
     next(err);
   }
 });
+router.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    customMessage: "Something failed, who knows?",
+    message: err.message,
+    stack: err.stack,
+  });
+});
 
 module.exports = router;
